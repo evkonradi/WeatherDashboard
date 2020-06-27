@@ -29,12 +29,28 @@
                 </div>    
             </div>
             
-            <div class="col-8 d-flex align-items-center">
+            <div class="col-8 d-flex flex-column align-items-left">
+                <div class="d-flex flex-column align-items-left border border-right-0 mt-3 p-3">
+                    <div class="py-2 d-flex align-items-center">
+                        <h3 id ="cityNameWeather"></h3>
+                        <img id="currentWeatherIcon"></img>
+                    </div>
+                    <div class="py-2"><span>Temperature:&nbsp;&nbsp;</span><span id = "temperature"></span></div>
+                    <div class="py-2"><span>Humidity:&nbsp;&nbsp;</span><span id = "humidity"></span></div>
+                    <div class="py-2"><span>Wind Speed:&nbsp;&nbsp;</span><span id = "windSpeed"></span></div>
+                    <div class="py-2"><span>UV Index:&nbsp;&nbsp;</span><span id = "UVIndex" class="p-2 rounded-sm text-white"></span></div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div></div>
+
+                </div>
             </div>
         </div>
 
     </div>    
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
