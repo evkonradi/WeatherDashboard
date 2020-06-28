@@ -66,13 +66,68 @@ var getCurrentWeather = function(cityName){
     fetch(apiUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
+                var containerCurWeather = document.getElementById("containerCurWeather");
+                containerCurWeather.className = containerCurWeather.className.replace(/\binvisible\b/g, "visible");
                 document.getElementById("cityNameWeather").innerHTML = cityName + "&nbsp;&nbsp;(" + moment().format("M/DD/YYYY") + ")";
                 document.getElementById("currentWeatherIcon").src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
-                document.getElementById("temperature").innerHTML = data.main.temp + " F";
+                document.getElementById("temperature").innerHTML = data.main.temp + " °F";
                 document.getElementById("humidity").innerHTML = data.main.temp + " %";
                 document.getElementById("windSpeed").innerHTML = data.wind.speed + " MPH";
                 document.getElementById("UVIndex").innerHTML = data.main.temp;
                 getCurrentUVIndex(data.coord.lon, data.coord.lat);
+            });
+        } else {
+            alert("Error: " + response.statusText);
+        }
+    })
+    .catch(function(error){
+        alert(error);
+    });
+}
+
+// Get 5 days forecast
+var get5daysWeather = function(cityName){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=54f32668a2bf6aeb6c55df89a2e807fb";
+  
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+
+                console.log(data);
+                
+                // get 3pm weather conditions
+                for (i=4; i< data.list.length; i=i+8){
+
+                    var container5DaysWeather = document.getElementById("container5DaysWeather");
+                    container5DaysWeather.className = container5DaysWeather.className.replace(/\binvisible\b/g, "visible");
+
+                    var container5DaysHeading = document.getElementById("container5DaysHeading");
+                    container5DaysHeading.className = container5DaysHeading.className.replace(/\binvisible\b/g, "visible");
+
+                    var cardEl = document.getElementById("card" + ((i-4)/8+1) );
+                    cardEl.className = "card-body bg-primary text-white rounded-sm";
+                    
+                    var h5El = document.createElement("h5");
+                    h5El.innerHTML= moment(data.list[i].dt_txt).format("MM/DD/YYYY");
+                    cardEl.appendChild(h5El);
+
+                    var imgIcon = document.createElement("img");
+                    imgIcon.src = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png";
+                    cardEl.appendChild(imgIcon);
+
+                    var tempEl = document.createElement("div");
+                    tempEl.innerHTML = "Temp:&nbsp;&nbsp;" + data.list[i].main.temp + "°F";
+                    cardEl.appendChild(tempEl);
+
+                    var humidityEl = document.createElement("div");
+                    humidityEl.innerHTML = "Humidity:&nbsp;&nbsp;" + data.list[i].main.humidity + "%";
+                    cardEl.appendChild(humidityEl);
+
+                }
+                //document.getElementById("cityNameWeather").innerHTML = cityName + "&nbsp;&nbsp;(" + moment().format("M/DD/YYYY") + ")";
+                //document.getElementById("currentWeatherIcon").src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
+                //document.getElementById("temperature").innerHTML = data.main.temp + " F";
+                //document.getElementById("humidity").innerHTML = data.main.temp + " %";
             });
         } else {
             alert("Error: " + response.statusText);
@@ -96,6 +151,8 @@ var searchCity = function(){
     //get current weather (APi call)
     getCurrentWeather(cityName);
 
+    get5daysWeather(cityName);
+
     //add city to the list and save to local storage
     if (!selectedCitiesAr.includes(cityName))
     {
@@ -111,6 +168,7 @@ var selectCityFromList = function(event){
     var targetEl = event.target;
     var cityName = event.target.getAttribute("data-city");
     getCurrentWeather(cityName);
+    get5daysWeather(cityName);
 }
 
 selectedCitiesEl.addEventListener("click", selectCityFromList);
