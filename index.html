@@ -16,7 +16,7 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-3 bg-light d-flex flex-column align-items-left">
+            <div class="col-12 col-lg-3 bg-light d-flex flex-column align-items-left">
                 <div>
                     <h5><label for="searchCityInput" class="font-weight-bold mt-3">Search for a City:</label></h5>
                 </div>    
@@ -29,7 +29,10 @@
                 </div>    
             </div>
             
-            <div class="col-9 d-flex flex-column align-items-left">
+            <div class="col-12 col-lg-9 d-flex flex-column align-items-left">
+
+                <div id = "error" class="text-danger"></div>
+
                 <div class="d-flex flex-column align-items-left border border-right-0 rounded-sm mt-3 p-3 invisible" id ="containerCurWeather">
                     <div class="py-2 d-flex align-items-center">
                         <h3 id ="cityNameWeather"></h3>
@@ -41,11 +44,11 @@
                     <div class="py-2"><span>UV Index:&nbsp;&nbsp;</span><span id = "UVIndex" class="p-2 rounded-sm text-white"></span></div>
                 </div>
 
-                <div class="mt-2 invisible" id ="container5DaysHeading">
+                <div class="mt-2 pl-3 invisible" id ="container5DaysHeading">
                     <h3>5-Day Forecast</h3>
                 </div>
 
-                <div class="d-flex justify-content-between invisible" id ="container5DaysWeather">
+                <div class="d-flex justify-content-start flex-wrap invisible" id ="container5DaysWeather">
                     <div class="card">
                         <div id ="card1">
                         </div>
@@ -66,7 +69,6 @@
                         <div id ="card5">
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
